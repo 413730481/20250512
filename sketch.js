@@ -25,17 +25,21 @@ function draw() {
 
   stroke(255, 0, 0); // 紅色
   strokeWeight(5); // 線條粗細為5
-  noFill();
 
   if (predictions.length > 0) {
     const keypoints = predictions[0].scaledMesh;
 
-    beginShape();
-    for (let i = 0; i < points.length; i++) {
-      const index = points[i];
-      const [x, y] = keypoints[index];
-      vertex(x, y);
+    for (let i = 0; i < points.length - 1; i++) {
+      const indexA = points[i];
+      const indexB = points[i + 1];
+      const [xA, yA] = keypoints[indexA];
+      const [xB, yB] = keypoints[indexB];
+      line(xA, yA, xB, yB); // 繪製兩點之間的線
     }
-    endShape(CLOSE); // 將所有點串聯並閉合
+
+    // 將最後一點與第一點連接，形成閉合圖形
+    const [xStart, yStart] = keypoints[points[0]];
+    const [xEnd, yEnd] = keypoints[points[points.length - 1]];
+    line(xEnd, yEnd, xStart, yStart);
   }
 }
