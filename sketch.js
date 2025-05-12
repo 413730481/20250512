@@ -1,8 +1,8 @@
 let facemesh;
 let video;
 let predictions = [];
-const points = [409, 270, 269, 267, 0, 37, 39, 40, 185, 61, 146, 91, 181, 84, 17, 314, 405, 321, 375, 291];
-const innerPoints = [78, 95, 88, 178, 87, 14, 317, 402, 318, 324, 308, 78];
+// 嘴巴的外部輪廓索引
+const points = [61, 146, 91, 181, 84, 17, 314, 405, 321, 375, 291, 61];
 
 function setup() {
   createCanvas(640, 480);
@@ -30,27 +30,14 @@ function draw() {
   if (predictions.length > 0) {
     const keypoints = predictions[0].scaledMesh;
 
+    // 繪製嘴巴的外部輪廓
     for (let i = 0; i < points.length - 1; i++) {
       const indexA = points[i];
       const indexB = points[i + 1];
-      const [xA, yA] = keypoints[indexA];
-      const [xB, yB] = keypoints[indexB];
-      line(xA, yA, xB, yB); // 繪製兩點之間的線
-    }
-
-    // 將最後一點與第一點連接，形成閉合圖形
-    const [xStart, yStart] = keypoints[points[0]];
-    const [xEnd, yEnd] = keypoints[points[points.length - 1]];
-    line(xEnd, yEnd, xStart, yStart);
-
-    // 繪製嘴巴的內部輪廓
-    for (let i = 0; i < innerPoints.length - 1; i++) {
-      const indexA = innerPoints[i];
-      const indexB = innerPoints[i + 1];
       if (keypoints[indexA] && keypoints[indexB]) {
         const [xA, yA] = keypoints[indexA];
         const [xB, yB] = keypoints[indexB];
-        line(xA, yA, xB, yB);
+        line(xA, yA, xB, yB); // 繪製兩點之間的線
       }
     }
   }
