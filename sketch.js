@@ -4,7 +4,7 @@ let predictions = [];
 const points = [409, 270, 269, 267, 0, 37, 39, 40, 185, 61, 146, 91, 181, 84, 17, 314, 405, 321, 375, 291];
 
 function setup() {
-  createCanvas(400, 400);
+  createCanvas(640, 480);
   video = createCapture(VIDEO);
   video.size(400, 400);
   video.hide();
